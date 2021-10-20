@@ -1,9 +1,9 @@
 class HumanPlayer < Player
-  attr_accessor :weapon_level, :life_points # /!\ penser à appeler les attributs qui différent de ceux de la classe mère
+  attr_accessor :weapon_level # /!\ penser à appeler les attributs qui différent de ceux de la classe mère
 
   def initialize(name) #paramétrage de l'objet spécifique Human
-    @name = name
-    @life_points = 100 
+    super(name)
+    @life_points = 30 
     @weapon_level = 1
   end
 
@@ -20,7 +20,7 @@ class HumanPlayer < Player
   end
 
   def search_weapon
-    new_weapon_level = rand(1..6)
+    new_weapon_level = rand(1..3)
     puts "Bravo #{@name}, tu as trouvé une arme de niveau #{new_weapon_level}"
     if new_weapon_level > @weapon_level
       @weapon_level = new_weapon_level
@@ -32,18 +32,16 @@ class HumanPlayer < Player
 
   def search_health_pack
     health_pack = rand(1..6)
-    if health_pack == 1 #comparaison d'une variable avec le résultat souhaité
+    if health_pack <= 3 #comparaison d'une variable avec le résultat souhaité
       puts "Zut #{@name}, tu n'as rien trouvé !"
-    elsif health_pack >= 2 && health_pack <= 5 
+    elsif health_pack >= 4 && health_pack <= 5 
       puts "Cool #{@name}, tu as trouvé un pack de +10 points de vie ❤️!"
       @life_points += 10
-      if @life_points > 100
-        @life_points = 100
-      end
     elsif health_pack == 6
-      puts "Waow #{@name}, tu as trouvé un pack de +30 points de vie ❤️❤️!"
-      @life_points += 30
-      @life_points = @life_points.clamp(0, 100) #autre méthode pour borner un résultat : https://www.bigbinary.com/blog/ruby-2-4-adds-comparable-clamp-method
+      puts "Waow #{@name}, tu as trouvé un pack de +20 points de vie ❤️❤️!"
+      @life_points += 20
     end
+    @life_points = 30 if @life_points > 30
+    #@life_points = @life_points.clamp(0, 100) >>> autre méthode pour borner un résultat : https://www.bigbinary.com/blog/ruby-2-4-adds-comparable-clamp-method
   end 
 end

@@ -33,6 +33,20 @@ def perform
   puts "En garde, #{human_player.name} !"
   puts 
 
+  # PARAMETRAGE DU MENU
+  def menu(pokemon1, pokemon2) 
+    puts
+    puts "C'est à ton tour. Quelle action veux-tu effectuer ?"
+    puts 
+    puts "a - chercher une meilleure arme 🔫"
+    puts "s - chercher à se soigner 💉"
+    puts "1 - attaquer #{pokemon1.name} 👊"
+    puts "2 - attaquer #{pokemon2.name} 👊"
+    puts
+    print "> "
+    user_choice = gets.chomp.to_s
+  end
+
   ### EXECUTION DU COMBAT ###
   while human_player.life_points > 0 && (pokemon1.life_points > 0 || pokemon2.life_points > 0) do
     puts
@@ -52,29 +66,19 @@ def perform
     puts "LET'S FIGHT ! ⚔️ "
 
     ### HUMAN_PLAYER JOUE EN PREMIER A CHAQUE ROUND ###
-    puts
-    puts "C'est à ton tour. Quelle action veux-tu effectuer ?"
-    puts 
-    puts "a - chercher une meilleure arme 🔫"
-    puts "s - chercher à se soigner 💉"
-    puts "1 - attaquer #{pokemon1.name} 👊"
-    puts "2 - attaquer #{pokemon2.name} 👊"
-    puts
-    print "> "
-    user_choice = gets.chomp.to_s
-    puts
-    
-    case user_choice
-    when "a"
-      human_player.search_weapon
-    when "s"
-      human_player.search_health_pack
-    when "1"
-      human_player.attacks(pokemon1)
-    when "2"
-      human_player.attacks(pokemon2)
-    else 
-      puts "Erreur. Indique un choix correspondant au menu ci-dessus."
+
+    case menu(pokemon1, pokemon2)
+      when "a"
+        human_player.search_weapon
+      when "s"
+        human_player.search_health_pack
+      when "1"
+        human_player.attacks(pokemon1)
+      when "2"
+        human_player.attacks(pokemon2)
+      else 
+        puts "Mauvaise entrée...choisis une action parmi les options du menu."
+        user_choice = gets.chomp.to_s #autre solution >>> "next" pour retour au début de la boucle !
     end
 
     ### TRANSITION ###
